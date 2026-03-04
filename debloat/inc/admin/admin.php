@@ -154,7 +154,7 @@ class Admin
 		]);
 
 		$this->add_options(
-			OptionsData::get_css(),
+			OptionsData::get_css(false),
 			$options
 		);
 
@@ -173,7 +173,7 @@ class Admin
 		]);
 
 		$this->add_options(
-			OptionsData::get_js(),
+			OptionsData::get_js(false),
 			$js_options
 		);
 
@@ -192,7 +192,7 @@ class Admin
 		]);
 
 		$this->add_options(
-			OptionsData::get_general(),
+			OptionsData::get_general(false),
 			$general_options
 		);
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2024 debloat
+# Copyright (C) 2026 debloat
 # This file is distributed under the same license as the debloat package.
 msgid ""
 msgstr ""
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: bootstrap.php:14
-msgid "The %2$sDebloat%3$s plugin requires %2$sPHP 7.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s"
+msgid "The %2$sDebloat%3$s plugin requires %2$sPHP 7.4.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s"
 msgstr ""
 
 #: inc/admin/admin.php:145
@@ -203,6 +203,14 @@ msgstr ""
 
 #: inc/admin/options-data.php:210
 msgid "Advanced: Conditionally Keep Selectors"
+msgstr ""
+
+#: inc/admin/options-data.php:211
+msgid "Add advanced conditions."
+msgstr ""
+
+#: inc/admin/options-data.php:220
+msgid "Keep selector if a certain condition is true. For example, condition type class with match <code>.mfp-lightbox</code> can be used to search for <code>.mfp-</code> to keep all the CSS selectors that have .mfp- in selector."
 msgstr ""
 
 #: inc/admin/options-data.php:226

@@ -4,14 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd6ebad781da56998a7eac682438f7e79
+class ComposerStaticInit64c73d4af7bb721009b2e2b61bb77adc
 {
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Sabberworm\\CSS\\' => 15,
         ),
-        'M' => 
+        'M' =>
         array (
             'MatthiasMullie\\PathConverter\\' => 29,
             'MatthiasMullie\\Minify\\' => 22,
@@ -19,15 +19,15 @@ class ComposerStaticInitd6ebad781da56998a7eac682438f7e79
     );
 
     public static $prefixDirsPsr4 = array (
-        'Sabberworm\\CSS\\' => 
+        'Sabberworm\\CSS\\' =>
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-        'MatthiasMullie\\PathConverter\\' => 
+        'MatthiasMullie\\PathConverter\\' =>
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
         ),
-        'MatthiasMullie\\Minify\\' => 
+        'MatthiasMullie\\Minify\\' =>
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
         ),
@@ -91,9 +91,9 @@ class ComposerStaticInitd6ebad781da56998a7eac682438f7e79
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd6ebad781da56998a7eac682438f7e79::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd6ebad781da56998a7eac682438f7e79::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd6ebad781da56998a7eac682438f7e79::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit64c73d4af7bb721009b2e2b61bb77adc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit64c73d4af7bb721009b2e2b61bb77adc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit64c73d4af7bb721009b2e2b61bb77adc::$classMap;
 
         }, null, ClassLoader::class);
     }

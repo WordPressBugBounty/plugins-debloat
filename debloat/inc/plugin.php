@@ -22,7 +22,7 @@ class Plugin
 	/**
 	 * Plugin version
 	 */
-	const VERSION = '1.2.8';
+	const VERSION = '1.3.0';
 
 	public static $instance;
 
@@ -161,7 +161,7 @@ class Plugin
 	public function register_hooks()
 	{
 		// Translations
-		add_action('plugins_loaded', array($this, 'load_textdomain'));
+		add_action('init', array($this, 'load_textdomain'));
 	}
 
 	/**

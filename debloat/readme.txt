@@ -2,9 +2,9 @@
 Contributors: asadkn
 Tags: speed, performance, uncss, optimize
 Requires at least: 5.0
-Tested up to: 6.6
-Requires PHP: 7.1
-Stable tag: 1.2.8
+Tested up to: 6.9
+Requires PHP: 7.4.1
+Stable tag: 1.3.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,7 @@ WARNING: It's a powerful speed optimization plugin that's meant for power users 
 * Compatible with cache plugins (disable their JS and CSS optimizations).
 * API and hooks for theme & plugin authors.
 
+
 == Installation ==
 
 1. Upload/Install and activate the plugin.
@@ -40,6 +41,11 @@ WARNING: It's a powerful speed optimization plugin that's meant for power users 
 3. Clear all caches from any cache plugin you may have active.
 
 == Changelog ==
+
+= 1.3.0 =
+* Improved: A new performant way to load translations.
+* Fixed: Typos in the translations.
+* Updated: CMB2 dependency to the latest stable release.
 
 = 1.2.8 =
 * Added: Support for a new lazyload from ThemeSphere.

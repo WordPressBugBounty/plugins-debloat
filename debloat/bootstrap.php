@@ -4,7 +4,7 @@
  */
 defined('WPINC') || exit;
 
-if (version_compare(phpversion(), '7.1', '<')) {
+if (version_compare(phpversion(), '7.4.1', '<')) {
 	/**
 	 * Display an admin error notice when PHP is older the version 7.1
 	 * Hook it to the 'admin_notices' action.
@@ -12,7 +12,7 @@ if (version_compare(phpversion(), '7.1', '<')) {
 	function debloat_old_php_admin_error_notice() {
 		
 		$message = sprintf(esc_html__(
-			'The %2$sDebloat%3$s plugin requires %2$sPHP 7.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s', 'debloat'), 
+			'The %2$sDebloat%3$s plugin requires %2$sPHP 7.4.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s', 'debloat'), 
 			phpversion(), 
 			'<strong>', 
 			'</strong>', 

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.2.8',
-        'version' => '1.2.8.0',
-        'reference' => '1d0dc203082e6188f66a92f12c79b92de1695fab',
+        'pretty_version' => '1.3.0',
+        'version' => '1.3.0.0',
+        'reference' => '2aebba9a570ad483199f935c591ac039e5e28f61',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,23 +11,21 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.2.8',
-            'version' => '1.2.8.0',
-            'reference' => '1d0dc203082e6188f66a92f12c79b92de1695fab',
+            'pretty_version' => '1.3.0',
+            'version' => '1.3.0.0',
+            'reference' => '2aebba9a570ad483199f935c591ac039e5e28f61',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'cmb2/cmb2' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => 'd1f124fe3f86e452c5976aa02891b93d65fb08f1',
+            'pretty_version' => 'v2.11.0',
+            'version' => '2.11.0.0',
+            'reference' => '2847828b5cce1b48d09427ee13e6f7c752704468',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../cmb2',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'composer/installers' => array(
