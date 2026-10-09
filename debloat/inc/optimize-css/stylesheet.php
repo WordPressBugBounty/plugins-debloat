@@ -89,7 +89,7 @@ class Stylesheet extends Asset
 			$this->id = md5($this->url);
 		}
 
-		$this->is_google_fonts = stripos($this->url, 'fonts.googleapis.com/css') !== false;
+		$this->is_google_fonts = (bool) preg_match('#^(https?:)?//fonts\.googleapis\.com/css#i', $this->url);
 	}
 
 	/**
@@ -100,9 +100,15 @@ class Stylesheet extends Asset
 	 */
 	public static function from_tag(string $tag)
 	{
-        $attrs = Util\parse_attrs($tag);
+		$attrs = Util\parse_attrs($tag);
+		// $attrs = array_change_key_case($attrs, CASE_LOWER);
 
-		if (!isset($attrs['href'])) {
+		if (empty($attrs['href'])) {
+			return false;
+		}
+
+		// The 'rel' attribute must contain stylesheet.
+		if (empty($attrs['rel']) || strpos($attrs['rel'], 'stylesheet') === false) {
 			return false;
 		}
 
@@ -110,7 +116,7 @@ class Stylesheet extends Asset
 		$sheet->media = $attrs['media'] ?? '';
 
 		return $sheet;
-    }
+	}
 
 	public function render()
 	{
@@ -263,7 +269,7 @@ class Stylesheet extends Asset
 				continue;
 			}
 
-			$parsed_url = parse_url($url);
+			$parsed_url = wp_parse_url($url);
 
 			// Skip known host and protocol-relative paths.
 			if (!empty($parsed_url['host']) || empty($parsed_url['path']) || $parsed_url['path'][0] === '/') {

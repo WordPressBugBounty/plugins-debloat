@@ -11,7 +11,9 @@ if (version_compare(phpversion(), '7.4.1', '<')) {
 	 */
 	function debloat_old_php_admin_error_notice() {
 		
-		$message = sprintf(esc_html__(
+		$message = sprintf(
+			/* translators: %1$s: current PHP version, %2$s/%3$s: strong opening/closing tags, %4$s: line break. */
+			esc_html__(
 			'The %2$sDebloat%3$s plugin requires %2$sPHP 7.4.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s', 'debloat'), 
 			phpversion(), 
 			'<strong>', 

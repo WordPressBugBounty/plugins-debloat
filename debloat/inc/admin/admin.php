@@ -14,7 +14,7 @@ use Sphere\Debloat\Admin\OptionsData;
 class Admin
 {
 	/**
-	 * @var Sphere\Debloat\Admin\Cache
+	 * @var \Sphere\Debloat\Admin\Cache
 	 */
 	protected $cache;
 
@@ -34,7 +34,7 @@ class Admin
 		// Page to delete cache.
 		add_action('admin_menu', function() {
 			add_submenu_page(
-				'', 
+				'options-general.php', 
 				'Delete Cache', 
 				'Delete Cache', 
 				'manage_options', 
@@ -59,8 +59,8 @@ class Admin
 			// Add attributes to an empty span for cmb2-conditional
 			if (!empty($field->args['attributes'])) {
 				printf('<meta name="%s" %s />', 
-					$field->args('id'),
-					\CMB2_Utils::concat_attrs($field->args('attributes'))
+					esc_attr($field->args('id')),
+					\CMB2_Utils::concat_attrs($field->args('attributes')) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- values originate from hardcoded field definitions, not user input.
 				);
 			}
 
@@ -80,7 +80,7 @@ class Admin
 	public function register_assets()
 	{
 		// Specific assets for option pages only
-		if (!empty($_GET['page']) && strpos($_GET['page'], 'debloat_options') !== false) {
+		if (!empty($_GET['page']) && strpos($_GET['page'], 'debloat_options') !== false) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- for asset enqueue only. value never output, stored, or used beyond this.
 
 			wp_enqueue_script(
 				'debloat-cmb2-conditionals', 
@@ -334,14 +334,23 @@ class Admin
 				<?php endif; ?>
 				
 				<div class="cache-stats">
-					<p><?php printf(esc_html__('Minified CSS files: %d', 'debloat'), $css_cache); ?></p>
-					<p><?php printf(esc_html__('Minified JS files: %d', 'debloat'), $js_cache); ?></p>
-					<p><?php printf(esc_html__('Processed CSS Sheets: %d', 'debloat'), $css_sheets); ?></p>
+					<p><?php
+						/* translators: %d: number of minified CSS files. */
+						printf(esc_html__('Minified CSS files: %d', 'debloat'), absint($css_cache));
+					?></p>
+					<p><?php
+						/* translators: %d: number of minified JS files. */
+						printf(esc_html__('Minified JS files: %d', 'debloat'), absint($js_cache));
+					?></p>
+					<p><?php
+						/* translators: %d: number of processed CSS sheets. */
+						printf(esc_html__('Processed CSS Sheets: %d', 'debloat'), absint($css_sheets));
+					?></p>
 				</div>
 
-				<a href="<?php echo wp_nonce_url(admin_url('admin.php?page=debloat-delete-cache'), 'debloat_delete_cache'); ?>" 
+				<a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=debloat-delete-cache'), 'debloat_delete_cache')); ?>" 
 					class="button button-secondary" style="margin-top: 10px;">
-					<?php echo esc_html('Empty All Cache', 'debloat'); ?>
+					<?php esc_html_e('Empty All Cache', 'debloat'); ?>
 				</a>
 				</p>
 			</div>

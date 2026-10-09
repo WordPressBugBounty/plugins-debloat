@@ -77,7 +77,7 @@ class FileCache
 		// Get a local path if a valid URL was provided. Remote URLs also work.
 		$file = $this->fs->url_to_local($id);
 		if (!$file) {
-			// Remote here.
+			// Remote will fallback to using URL as id.
 		}
 
 		// MD5 on the id instead of file, as it's likely to be a URL that can has a changing 
@@ -90,13 +90,20 @@ class FileCache
 	/**
 	 * Save a file in the cache.
 	 *
-	 * @param string $id      Path, a local asset URL, or a unqiue name.
+	 * @param string $id      Path, an asset URL (local or remote), or a unqiue name.
 	 * @param string $content
 	 * @return bool|string    File path on success or false on failure.
 	 */
 	public function set($id, string $content = '')
 	{
 		if (!$content) {
+			return false;
+		}
+
+		// CSS only: JS cache content always comes from local disk files (the
+		// remote fetch exists solely for Google Fonts CSS), so scripts
+		// containing '<head' or '<?' strings stay cacheable.
+		if ($this->get_cache_type(strtok($id, '?')) === 'css' && (stripos($content, '<html') !== false || stripos($content, '<head') !== false || stripos($content, '<?') !== false)) {
 			return false;
 		}
 		
@@ -135,6 +142,7 @@ class FileCache
 	 */
 	protected function get_cache_type(string $file)
 	{
+		$file = strtok($file, '?#');
 		$extension = pathinfo($file, PATHINFO_EXTENSION);
 		$type = $extension === 'js' ? 'js' : 'css';
 

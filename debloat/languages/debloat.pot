@@ -13,7 +13,8 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: bootstrap.php:14
+#. translators: %1$s: current PHP version, %2$s/%3$s: strong opening/closing tags, %4$s: line break.
+#: bootstrap.php:16
 msgid "The %2$sDebloat%3$s plugin requires %2$sPHP 7.4.1+%3$s to run properly. Please contact your web hosting company and ask them to update the PHP version of your site.%4$s Your current version of PHP has reached end-of-life is %2$shighly insecure: %1$s%3$s"
 msgstr ""
 
@@ -69,16 +70,23 @@ msgstr ""
 msgid "Cache Stats"
 msgstr ""
 
-#: inc/admin/admin.php:337
+#. translators: %d: number of minified CSS files.
+#: inc/admin/admin.php:339
 msgid "Minified CSS files: %d"
 msgstr ""
 
-#: inc/admin/admin.php:338
+#. translators: %d: number of minified JS files.
+#: inc/admin/admin.php:343
 msgid "Minified JS files: %d"
 msgstr ""
 
-#: inc/admin/admin.php:339
+#. translators: %d: number of processed CSS sheets.
+#: inc/admin/admin.php:347
 msgid "Processed CSS Sheets: %d"
+msgstr ""
+
+#: inc/admin/admin.php:353
+msgid "Empty All Cache"
 msgstr ""
 
 #: inc/admin/options-data.php:20
@@ -87,6 +95,26 @@ msgstr ""
 
 #: inc/admin/options-data.php:21
 msgid "Single Post/Article"
+msgstr ""
+
+#: inc/admin/options-data.php:22
+msgid "Pages"
+msgstr ""
+
+#: inc/admin/options-data.php:23
+msgid "Homepage"
+msgstr ""
+
+#: inc/admin/options-data.php:24
+msgid "Archives"
+msgstr ""
+
+#: inc/admin/options-data.php:25
+msgid "Categories"
+msgstr ""
+
+#: inc/admin/options-data.php:26
+msgid "Search"
 msgstr ""
 
 #: inc/admin/options-data.php:44

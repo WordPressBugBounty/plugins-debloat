@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.3.0',
-        'version' => '1.3.0.0',
-        'reference' => '2aebba9a570ad483199f935c591ac039e5e28f61',
+        'pretty_version' => '1.4.0',
+        'version' => '1.4.0.0',
+        'reference' => 'dc67fa60ba570271d840f1af081e4c75efbb0a00',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.3.0',
-            'version' => '1.3.0.0',
-            'reference' => '2aebba9a570ad483199f935c591ac039e5e28f61',
+            'pretty_version' => '1.4.0',
+            'version' => '1.4.0.0',
+            'reference' => 'dc67fa60ba570271d840f1af081e4c75efbb0a00',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'cmb2/cmb2' => array(
-            'pretty_version' => 'v2.11.0',
-            'version' => '2.11.0.0',
-            'reference' => '2847828b5cce1b48d09427ee13e6f7c752704468',
+            'pretty_version' => 'v2.13.3',
+            'version' => '2.13.3.0',
+            'reference' => '0f2498434d97876f6f141fa1de99c8ec87840a4a',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../cmb2',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'matthiasmullie/minify' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'ea59f2981be3bd38b5c3fd92cd5cb6c7b0cd512e',
+            'reference' => '76ba4a5f555fd7bf4aa408af608e991569076671',
             'type' => 'library',
             'install_path' => __DIR__ . '/../matthiasmullie/minify',
             'aliases' => array(
@@ -73,14 +73,12 @@
             ),
         ),
         'sabberworm/php-css-parser' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'cc791ad',
+            'pretty_version' => 'v9.4.0',
+            'version' => '9.4.0.0',
+            'reference' => 'fd3bf9fb173e0df649bc4e3e0d088a1b2417c08f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'shama/baton' => array(
@@ -88,6 +86,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'thecodingmachine/safe' => array(
+            'pretty_version' => 'v1.3.3',
+            'version' => '1.3.3.0',
+            'reference' => 'a8ab0876305a4cdaef31b2350fcb9811b5608dbc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../thecodingmachine/safe',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );

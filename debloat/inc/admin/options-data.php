@@ -19,11 +19,11 @@ class OptionsData
 		$_common['enable_on'] = [
 			'all'         => esc_html__('All Pages', 'debloat'),
 			'single'      => esc_html__('Single Post/Article', 'debloat'),
-			'pages'       => esc_html__('Pages', 'delobat'),
-			'home'        => esc_html__('Homepage', 'delobat'),
-			'archives'    => esc_html__('Archives', 'delobat'),
-			'categories'  => esc_html__('Categories', 'delobat'),
-			'search'      => esc_html__('Search', 'delobat'),
+			'pages'       => esc_html__('Pages', 'debloat'),
+			'home'        => esc_html__('Homepage', 'debloat'),
+			'archives'    => esc_html__('Archives', 'debloat'),
+			'categories'  => esc_html__('Categories', 'debloat'),
+			'search'      => esc_html__('Search', 'debloat'),
 		];
 
 		return $key ? $_common[$key] : $_common;

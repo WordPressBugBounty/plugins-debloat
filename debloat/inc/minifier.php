@@ -17,7 +17,7 @@ class Minifier
 	protected $asset_type = 'js';
 
 	/**
-	 * @var Sphere\Debloat\OptimizeCss\Stylesheet|Sphere\Debloat\OptimizeJs\Script
+	 * @var OptimizeCss\Stylesheet|OptimizeJs\Script
 	 */
 	protected $asset;
 
@@ -155,13 +155,21 @@ class Minifier
 
 	/**
 	 * Get remote asset content and add to asset content.
+	 * 
+	 * Notes: @imports in remote content are not supported and stripped. 
 	 *
 	 * @return void
 	 */
 	public function fetch_remote_content()
 	{
-		$request = wp_remote_get($this->asset->url, [
-			'timeout' => 5,
+		// Allowlist: only ever fetch real Google Fonts CSS. Anything else,
+		// including same-site loopback URLs, is refused.
+		if (!preg_match('#^https://fonts\.googleapis\.com/css#i', $this->asset->url)) {
+			return;
+		}
+
+		$request = wp_safe_remote_get($this->asset->url, [
+			'timeout' => 3,
 			// For google fonts mainly.
 			'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
 		]);
@@ -170,7 +178,14 @@ class Minifier
 			return;
 		}
 
-		$this->asset->content = $request['body'];
+		// Only accept actual CSS from the remote fetch.
+		$type = $request['headers']['content-type'] ?? '';
+		if (stripos($type, 'text/css') === false) {
+			return;
+		}
+
+		// Strip @import so the minifier never reads local files.
+		$this->asset->content = preg_replace('#@import\b[^;]*;?#i', '', $request['body']);
 	}
 
 	/**

@@ -6,7 +6,7 @@
  *
  * Plugin Name:       Debloat
  * Description:       Remove Unused CSS, Optimize CSS, Optimize JS and speed up your site.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Author:            asadkn
  * Author URI:        https://profiles.wordpress.org/asadkn/
  * License:           GPL-2.0+

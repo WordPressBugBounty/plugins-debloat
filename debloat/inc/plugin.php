@@ -22,25 +22,43 @@ class Plugin
 	/**
 	 * Plugin version
 	 */
-	const VERSION = '1.3.0';
+	const VERSION = '1.4.0';
 
+	/**
+	 * @var Plugin
+	 */
 	public static $instance;
 
 	/**
-	 * @var string Can be 'dev' for debgging.
+	 * @var string Can be 'dev' for debugging.
 	 */
 	public $env = 'production';
 
 	/**
 	 * Path to plugin folder, trailing slashed.
+	 *
+	 * @var string
 	 */
 	public $dir_path;
+
+	/**
+	 * URL to plugin folder, trailing slashed.
+	 *
+	 * @var string
+	 */
 	public $dir_url;
 
+	/**
+	 * Main plugin file.
+	 *
+	 * @var string
+	 */
 	public $plugin_file;
 
 	/**
 	 * A pseudo service container
+	 * 
+	 * @var array
 	 */
 	public $container;
 
@@ -182,7 +200,7 @@ class Plugin
 	public function get($name, $args = array()) 
 	{
 		if (!isset($this->container[$name])) {
-			throw new \Exception("No container exists with key '{$name}'");
+			throw new \Exception("No container exists with key '{$name}'"); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- exception message for logs/fatal handler, never browser. $name is an internal container key.
 		}
 
 		$object = $this->container[$name];

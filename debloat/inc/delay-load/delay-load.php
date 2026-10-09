@@ -148,7 +148,7 @@ class DelayLoad
 		} else {
 
 			$js .= sprintf(
-				'<script type="text/javascript" src="%s" data-cfasync="false"></script>',
+				'<script type="text/javascript" src="%s" data-cfasync="false"></script>', // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- printed into the output-buffered HTML with data-cfasync intact; wp_enqueue_script() cannot preserve this markup/ordering.
 				esc_url(Plugin::get_instance()->dir_url . 'inc/delay-load/js/delay-load'. $min .'.js?ver=' . Plugin::VERSION)
 			);
 		}

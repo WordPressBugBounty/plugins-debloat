@@ -1,7 +1,8 @@
 <?php
-
 namespace Sphere\Debloat\Util;
 use Sphere\Debloat\Plugin;
+
+defined('ABSPATH') || exit;
 
 /**
  * Convert an option value to array format, and clean it.

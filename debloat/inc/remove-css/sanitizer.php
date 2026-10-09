@@ -107,7 +107,7 @@ class Sanitizer
 				continue;
 			}
 
-			$parsed_url = parse_url($url);
+			$parsed_url = wp_parse_url($url);
 
 			// Skip known host and protocol-relative paths.
 			if (!empty($parsed_url['host']) || empty($parsed_url['path']) || $parsed_url['path'][0] === '/') {
@@ -162,8 +162,9 @@ class Sanitizer
 	protected function parse_selectors($selectors)
 	{
 		$selectors = array_map(
+			/** @var Sabberworm\CSS\Property\Selector $sel */
 			function($sel) {
-				return $sel->__toString();
+				return $sel->render(new OutputFormat());
 			},
 			$selectors
 		);

@@ -108,9 +108,15 @@ class FileSystem
 	{
 		$url = trim($url);
 		
-		// Not a URL, just return the path.
+		// Not a URL: relative hrefs and root-relative URL paths land here.
 		if (substr($url, 0, 4) !== 'http' && substr($url, 0, 2) !== '//') {
-			return $url;
+
+			// Only if '..' is present, we need safe checks below.
+			if (strpos($url, '..') === false) {
+				return $url;
+			}
+
+			return $this->is_safe_local_path($url) ? $url : false;
 		}
 
 		$url = explode('?', trim($url));
@@ -121,9 +127,9 @@ class FileSystem
             $url = urldecode($url);
 		}
 
-		// Add https:// for parse_url() or it fails.
+		// Add https:// for wp_parse_url() or it fails.
 		$url_no_proto = preg_replace(self::PROTO_REMOVE_PATTERN, '', $url);
-		$url_host     = parse_url('https://' . $url_no_proto, PHP_URL_HOST);
+		$url_host     = wp_parse_url('https://' . $url_no_proto, PHP_URL_HOST);
 
 		// Not a known host / URL.
 		if (!in_array($url_host, $this->get_valid_hosts())) {
@@ -153,9 +159,135 @@ class FileSystem
 
 			$file = trailingslashit($path) . wp_basename($url_no_proto);
 
+			// Without `..` the file is textually under the picked root by
+			// construction, so containment is skipped entirely.
+			if (strpos($file, '..') !== false && !$this->is_safe_local_path($file, [wp_normalize_path($matched['path'])])) {
+				return false;
+			}
+
 			if (file_exists($file) && is_file($file) && is_readable($file)) {
 				return $file;
 			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Whether a non-URL path can be read without escaping known roots.
+	 *
+	 * Absolute paths must normalize inside a root. Relative paths are walked
+	 * lexically: any '..' above the implicit base is rejected. Pure string
+	 * ops, symlinks are never resolved and setups using them are unaffected.
+	 *
+	 * @param string $path
+	 * @param array  $extra_roots  Additional roots to allow, besides the canonical ones.
+	 * @return boolean
+	 */
+	protected function is_safe_local_path($path, $extra_roots = [])
+	{
+		$path = wp_normalize_path(trim($path));
+
+		$roots = array_merge([WP_CONTENT_DIR, ABSPATH], (array) $extra_roots);
+
+		// Absolute path (including Windows drive paths) must land in a root.
+		if (strpos($path, '/') === 0 || preg_match('#^[a-zA-Z]:/#', $path)) {
+			foreach ($roots as $root) {
+				if ($this->normalize_in_root($path, wp_normalize_path($root))) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		// Relative path: without `..` it cannot leave the base.
+		if (strpos($path, '..') === false) {
+			return true;
+		}
+
+		return $this->collapse_dot_segments($path) !== false;
+	}
+
+	/**
+	 * Collapse dot segments lexically, tracking escape above the base.
+	 *
+	 * Shared walker for absolute remainders and relative paths. Returns the
+	 * collapsed segments, or false when '..' pops above the base.
+	 *
+	 * @param string $path Forward-slashed path or remainder.
+	 * @return bool|array
+	 */
+	protected function collapse_dot_segments($path)
+	{
+		$parts = [];
+		foreach (explode('/', $path) as $part) {
+			if ($part === '' || $part === '.') {
+				continue;
+			}
+
+			if ($part === '..') {
+				if (!$parts) {
+					return false;
+				}
+
+				array_pop($parts);
+				continue;
+			}
+
+			$parts[] = $part;
+		}
+
+		return $parts;
+	}
+
+	/**
+	 * Lexically collapse dot segments and enforce containment in a root.
+	 *
+	 * String ops only: no filesystem access, symlinks untouched. Collapses
+	 * `..` (and any dot segments alongside them); paths without `..` take a
+	 * prefix-check fast path and come back unchanged. Returns the normalized
+	 * path, or false when `..` would escape the root.
+	 *
+	 * @param string $path Absolute path with forward slashes.
+	 * @param string $root Absolute root with forward slashes.
+	 * @return bool|string
+	 */
+	public function normalize_in_root($path, $root)
+	{
+		// Preserve Windows drive prefixes through normalization.
+		$drive = '';
+		if (preg_match('#^([a-zA-Z]:)(/.*)?$#', $path, $match)) {
+			$drive = strtolower($match[1]);
+			$path = isset($match[2]) && $match[2] !== '' ? $match[2] : '/';
+		}
+
+		if (preg_match('#^([a-zA-Z]:)(/.*)?$#', $root, $match)) {
+			$root = strtolower($match[1]) . (isset($match[2]) && $match[2] !== '' ? $match[2] : '/');
+		}
+
+		$root = rtrim($root, '/') . '/';
+
+		// Fast path: no parent segments, nothing to collapse.
+		if (strpos($path, '..') === false) {
+			$path = $drive . $path;
+
+			if ($path === rtrim($root, '/') || strpos($path, $root) === 0) {
+				return $path;
+			}
+
+			return false;
+		}
+
+		$parts = $this->collapse_dot_segments($path);
+		if ($parts === false) {
+			return false;
+		}
+
+		$path = $drive . '/' . implode('/', $parts);
+
+		if ($path === rtrim($root, '/') || strpos($path, $root) === 0) {
+			return $path;
 		}
 
 		return false;
@@ -187,12 +319,12 @@ class FileSystem
 	{
 		if (!$this->paths_urls) {
 
-			// We add https:// back for parse_url() to prevent it from failing
+			// We add https:// back for wp_parse_url() to prevent it from failing
 			$site_url  = preg_replace(self::PROTO_REMOVE_PATTERN, '', site_url());
-			$site_host = parse_url('https://' . $site_url, PHP_URL_HOST);
+			$site_host = wp_parse_url('https://' . $site_url, PHP_URL_HOST);
 
 			$content_url  = preg_replace(self::PROTO_REMOVE_PATTERN, '', content_url());
-			$content_host = parse_url('https://' . $content_url, PHP_URL_HOST);
+			$content_host = wp_parse_url('https://' . $content_url, PHP_URL_HOST);
 
 			/**
 			 * This array will be processed in order it's defined to find the matching host and URL.

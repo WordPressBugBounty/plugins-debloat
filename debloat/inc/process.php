@@ -172,7 +172,7 @@ class Process
 			return false;
 		}
 
-		if (isset($_GET['nodebloat'])) {
+		if (isset($_GET['nodebloat'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- frontend opt-out flag, only checked for presence; no data processed or state changed.
 			return false;
 		}
 
@@ -181,7 +181,7 @@ class Process
 		}
 
 		// WPBakery Page Builder. vc_is_page_editable() isn't reliable at all hooks.
-        if (!empty($_GET['vc_editable'])) {
+        if (!empty($_GET['vc_editable'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- page-builder preview flag, only checked for presence; no data processed or state changed.
 			return false;
         }
 

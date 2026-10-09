@@ -2,9 +2,9 @@
 Contributors: asadkn
 Tags: speed, performance, uncss, optimize
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4.1
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,13 @@ WARNING: It's a powerful speed optimization plugin that's meant for power users 
 3. Clear all caches from any cache plugin you may have active.
 
 == Changelog ==
+
+= 1.4.0 =
+* Hardened security in several places. 
+* Fixed: Security issue related to Google Fonts inline minify.
+* Fixed: Warning on cache clear on new WordPress versions.
+* Updated: CMB2 to fix several security and PHP 8.2+ issues. 
+* Updated: CSS Parser with support for all the modern CSS of past few years.
 
 = 1.3.0 =
 * Improved: A new performant way to load translations.
